@@ -1,0 +1,61 @@
+
+#command to start keyclock
+docker run -d -p 8085:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.2 start-dev
+
+user id : admin
+password : admin
+
+open url : localhost:8085
+create a new realem 
+
+create a new client 
+step 1 :
+
+Client type :OpenID Connect
+Client ID * : auth-client
+Name :auth-client
+Description :this is for testing
+Always display in UI :Off
+
+step 2:
+Client authentication :On
+Authorization :Off
+Authentication flow :Standard flow
+
+step 3:
+Root URL : ''
+Home URL : ''
+Valid redirect URIs:*
+Valid post logout redirect URIs : ''
+Web origins : ''
+
+
+create a user and set password
+username : Narendra
+password: admin
+
+Go to Realem settings 
+Go to login and customise your login screen
+
+
+Need client with one user is created 
+if you  need some url or data to integrate keycloak in postman or frontend or backend
+Go to Realem settings 
+Go to General --> scroll down to endpoints --> you find two links 
+
+
+
+TESTING WITH POSTMAN
+Auth Type :OAuth 2.0
+Configure New Token
+Token Name :AccessTocken1
+Grant type :Authorization Code
+Authorize using browser :yes
+Auth URL : get this data from keycloak client file -->authorization_endpoint
+Access Token URL : get this data from keycloak client file -->token_endpoint
+Client ID : get this data from keycloak client file
+Client Secret : get this data from keycloak client file
+State : you can pass anything here.
+Client Authentication : select via body
+
+
