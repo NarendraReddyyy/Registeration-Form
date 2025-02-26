@@ -9,8 +9,10 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -48,7 +50,17 @@ public class SecurityConfig {
     }
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri("http://localhost:8085")
+        String jwksUri = "http://localhost:8085/realms/registration_form/protocol/openid-connect/certs";
+
+        // ✅ Create a RestTemplate and set the correct Accept header
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setInterceptors(Collections.singletonList((request, body, execution) -> {
+            request.getHeaders().set("Accept", "application/json"); // ✅ Set correct Accept header
+            return execution.execute(request, body);
+        }));
+
+        return NimbusJwtDecoder.withJwkSetUri(jwksUri)
+                .restOperations(restTemplate) // ✅ Set pre-configured RestTemplate
                 .build();
     }
 
