@@ -25,7 +25,8 @@ public class SecurityConfig {
         // ✅ Enable CORS for Angular & external clients
         security.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of("http://localhost:4200", "http://20.163.136.45")); // ✅ Allowed origins
+            config.setAllowedOrigins(List.of("*")); // ✅ Allowed origins
+//            config.setAllowedOrigins(List.of("http://localhost:4200", "http://127.0.0.1")); // ✅ Allowed origins
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ✅ Allowed HTTP methods
             config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // ✅ Allowed headers
             config.setAllowCredentials(true);

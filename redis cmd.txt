@@ -1,0 +1,6 @@
+
+#To run redis on docker
+docker run --name redisdb -p 8086:6379 -d redis
+
+#To access redis cli
+docker exec -it redisdb redis-cli
